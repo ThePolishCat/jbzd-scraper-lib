@@ -8,22 +8,7 @@ const fetchJBZDData = (tag = "", page) => {
       const response = await axios.get(
         `https://jbzd.com.pl/${tag?`${tag}/`:""}${page?tag?`${page}`:`scr/${page}`:""}?type%5B%5D=image&type%5B%5D=article`
       );
-      /*
-      if (!page) {
-        response = await axios.get(
-          `https://jbzd.com.pl/${tag}?type%5B%5D=image&type%5B%5D=article`
-        );
-      } else {
-        response = await axios.get(
-          `https://jbzd.com.pl/str/${page}?type%5B%5D=image&type%5B%5D=article`
-        );
-        if (tag) {
-          response = await axios.get(
-            `https://jbzd.com.pl/${tag}/${page}?type%5B%5D=image&type%5B%5D=article`
-          );
-        }
-      }
-      */
+
       const $ = cheerio.load(response.data);
       const pageInfo = [];
 
