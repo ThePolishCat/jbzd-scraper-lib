@@ -2,7 +2,7 @@ const axios = require("axios");
 const cheerio = require("cheerio");
 
 // Function to fetch JBZD data
-const fetchJBZDData = (tag, page) => {
+const fetchJBZDData = (tag = "", page) => {
   return new Promise(async (resolve, reject) => {
     try {
       let response;
