@@ -58,20 +58,24 @@ const fetchJBZDData = async (tag, page) => {
   }
 };
 
-const extractCategoriesWithLinks = async (tag, page) =>  {
-  response = await axios.get(`https://jbzd.com.pl/`);
-  const $ = cheerio.load(response.data);
-  const categories = [];
+const extractCategoriesWithLinks = async () => {
+  try {
+    const response = await axios.get("https://jbzd.com.pl");
+    const $ = cheerio.load(response.data);
+    const categories = [];
+    $(".nav-categories a").each(function (index, element) {
+      const category = $(element).text().trim();
+      const link = $(element).attr("href");
+      categories.push({ name: category, link: link });
+    });
 
-  // Find all category links and extract their names and URLs
-  $(".nav-categories a").each(function (index, element) {
-    const category = $(element).text().trim();
-    const link = $(element).attr("href");
-    categories.push({ name: category, link: link });
-  });
+    return categories;
+  } catch (error) {
+    console.log(error);
+    throw new Error("An error occurred while fetching data");
+  }
+};
 
-  return categories;
-}
 
 module.exports = { fetchJBZDData, extractCategoriesWithLinks };
 
