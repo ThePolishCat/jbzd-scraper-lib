@@ -6,7 +6,7 @@ const fetchJBZDData = (tag = "", page) => {
   return new Promise(async (resolve, reject) => {
     try {
       const response = await axios.get(
-        `https://jbzd.com.pl/${tag?`${tag}/`:""}${page?tag?`${page}`:`scr/${page}`:""}?type%5B%5D=image&type%5B%5D=article`
+        `https://jbzd.com.pl/${tag?`${tag}/`:""}${page?tag?`${page}`:`str/${page}`:""}?type%5B%5D=image&type%5B%5D=article`
       );
 
       const $ = cheerio.load(response.data);
