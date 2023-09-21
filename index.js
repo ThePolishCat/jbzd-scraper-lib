@@ -69,9 +69,10 @@ const extractCategoriesWithLinks = () => {
 
       // Find all category links and extract their names and URLs
       $(".nav-categories a").each(function (index, element) {
-        const category = $(element).text().trim();
-        const link = $(element).attr("href");
-        categories.push({ name: category, link: link });
+        const categoryName = $(element).text().trim();
+        const categoryLink = $(element).attr("href");
+        const categoryTag = categoryLink.replace("https://jbzd.com.pl/", "");
+        categories.push({ name: categoryName, link: categoryLink, tag: categoryTag });
       });
 
       resolve(categories);
