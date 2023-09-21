@@ -58,8 +58,9 @@ const fetchJBZDData = async (tag, page) => {
   }
 };
 
-function extractCategoriesWithLinks(html) {
-  const $ = cheerio.load(html);
+const extractCategoriesWithLinks = async (tag, page) =>  {
+  response = await axios.get(`https://jbzd.com.pl/`);
+  const $ = cheerio.load(response.data);
   const categories = [];
 
   // Find all category links and extract their names and URLs
