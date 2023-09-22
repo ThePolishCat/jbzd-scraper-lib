@@ -2,44 +2,44 @@ const axios = require("axios");
 const cheerio = require("cheerio");
 
 // Function to fetch JBZD data
-const fetchJBZDData = (tag = "", page) => {
+const jbzdContent = (tag = "", page) => {
   return new Promise(async (resolve, reject) => {
     try {
       const response = await axios.get(
-        `https://jbzd.com.pl/${tag?`${tag}/`:""}${page?tag?`${page}`:`str/${page}`:""}?type%5B%5D=image&type%5B%5D=article`
+        `https://jbzd.com.pl/${tag ? `${tag}/` : ""}${page ? tag ? `${page}` : `str/${page}` : ""}?type%5B%5D=image&type%5B%5D=article`
       );
 
       const $ = cheerio.load(response.data);
-      const pageInfo = [];
+      const pageData = [];
 
       $(".article").each(function () {
         const article = $(this);
         const articleTitle = article.find(".article-title").text().trim();
         const articleUrl = article.find(".article-title a").attr("href");
-        const elements = [];
+        const articleElements = [];
 
         $(".article-container", article)
           .find("*")
           .each(function () {
             const element = $(this);
             if (element.hasClass("article-description")) {
-              elements.push({ type: "description", text: element.text().trim() });
+              articleElements.push({ type: "description", text: element.text().trim() });
             } else if (element.hasClass("article-image")) {
               const imageUrl = element.find("img").attr("src");
               if (imageUrl) {
-                elements.push({ type: "image", src: imageUrl });
+                articleElements.push({ type: "image", src: imageUrl });
               }
             }
           });
 
-        pageInfo.push({
-          name: articleTitle,
+        pageData.push({
+          title: articleTitle,
           url: articleUrl,
-          elements: elements,
+          elements: articleElements,
         });
       });
 
-      resolve(pageInfo);
+      resolve(pageData);
     } catch (error) {
       console.log(error);
       reject(new Error("An error occurred while fetching data"));
@@ -48,7 +48,7 @@ const fetchJBZDData = (tag = "", page) => {
 };
 
 // Function to extract categories with links from HTML
-const extractCategoriesWithLinks = () => {
+const jbzdCategories = () => {
   return new Promise(async (resolve, reject) => {
     try {
       const response = await axios.get("https://jbzd.com.pl/");
@@ -71,4 +71,4 @@ const extractCategoriesWithLinks = () => {
   });
 };
 
-module.exports = { fetchJBZDData, extractCategoriesWithLinks };
+module.exports = { jbzdContent, jbzdCategories };
