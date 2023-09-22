@@ -22,15 +22,15 @@ To use the library, you need to import it into your Node.js project:
 const jbzdScraper = require("jbzd-scraper-lib");
 ```
 
-### Fetch JBZD Data
+### Fetch JBZD Contentt
 
-The `fetchJBZDData` function allows you to retrieve data from JBZD based on a specified tag and page number. Here's how to use it:
+The `jbzdContent` function allows you to retrieve data from JBZD based on a specified tag and page number. Here's how to use it:
 
 ```javascript
 const tag = "funny"; // Specify the tag (optional)
 const page = 1;      // Specify the page number (optional)
 
-jbzdScraper.fetchJBZDData(tag, page)
+jbzdScraper.jbzdContent(tag, page)
   .then((data) => {
     // Handle the retrieved JBZD data
     console.log(data);
@@ -40,12 +40,12 @@ jbzdScraper.fetchJBZDData(tag, page)
   });
 ```
 
-### Extract Categories with Links
+### Extract Categories
 
-The `extractCategoriesWithLinks` function retrieves a list of JBZD categories along with their links. Here's how to use it:
+The `jbzdCategories` function retrieves a list of JBZD categories along with their links. Here's how to use it:
 
 ```javascript
-jbzdScraper.extractCategoriesWithLinks()
+jbzdScraper.jbzdCategories()
   .then((categories) => {
     // Handle the retrieved categories
     console.log(categories);
