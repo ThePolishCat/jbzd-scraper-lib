@@ -23,8 +23,8 @@ async function jbzdContent(tag = "", page) {
           const element = $(this);
           if (element.hasClass("article-description")) {
             articleElements.push({ type: "description", text: element.text().trim() });
-          } else if (element.hasClass("article-image")) {
-            const imageUrl = element.find("img").attr("src");
+          } else if (article.hasClass("article-image")) {
+            const imageUrl = article.find("img").attr("src");
             if (imageUrl) {
               articleElements.push({ type: "image", src: imageUrl });
             }
