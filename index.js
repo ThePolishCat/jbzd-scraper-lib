@@ -5,10 +5,10 @@ const cheerio = require("cheerio");
 async function jbzdContent(tag = "", page) {
   try {
     const response = await axios.get(
-      `https://jbzd.com.pl/${tag ? `${tag}/` : ""}${page ? tag ? `${page}` : `str/${page}` : ""}?type%5B%5D=image&type%5B%5D=article`
+      `${tag !== losowe ? `https://jbzd.com.pl/${tag ? `${tag}/` : ""}${page ? tag ? `${page}` : `str/${page}` : ""}?type%5B%5D=image&type%5B%5D=article` : `https://jbzd.com.pl/${tag}`}`
     );
 
-    const $ = cheerio.load(response.data);
+    const $ = cheerio.load(response.data); 
     const pageData = [];
 
     $(".article").each(function () {
