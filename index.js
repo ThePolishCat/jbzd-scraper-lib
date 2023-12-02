@@ -29,7 +29,7 @@ async function jbzdContent(tag = "", page) {
               articleElements.push({ type: "image", src: imageUrl });
             }
           }
-          if (tag == losowe){
+          if (tag == "losowe"){
             if (article.hasClass("article-image")) {
               const imageUrl = article.find("img").attr("src");
               if (imageUrl) {
