@@ -4,9 +4,13 @@ const cheerio = require("cheerio");
 // Function to fetch JBZD data
 async function jbzdContent(tag = "", page) {
   try {
-    const response = await axios.get(
-      `${tag !== 'losowe' ? `https://jbzd.com.pl/${tag ? `${tag}/` : ""}${page ? tag ? `${page}` : `str/${page}` : ""}?type%5B%5D=image&type%5B%5D=article` : `https://jbzd.com.pl/${tag}`}`
-    );
+    let url
+    if (tag == 'losowe'){
+      url = 'https://jbzd.com.pl/losowe'
+    } else {
+      url = `https://jbzd.com.pl/${tag ? `${tag}/` : ""}${page ? tag ? `${page}` : `str/${page}` : ""}?type%5B%5D=image&type%5B%5D=article` 
+    }
+    const response = await axios.get(url);
 
     const $ = cheerio.load(response.data); 
     const pageData = [];
@@ -29,16 +33,15 @@ async function jbzdContent(tag = "", page) {
               articleElements.push({ type: "image", src: imageUrl });
             }
           }
-          if (tag == "losowe"){
-            if (article.hasClass("article-image")) {
-              const imageUrl = article.find("img").attr("src");
-              if (imageUrl) {
-                articleElements.push({ type: "image", src: imageUrl });
-              }
-            }
-          }
         });
-
+      if (tag == "losowe"){
+        if (article.find('div.article-content > div.article-image.article-media-image > img')) {
+          const imageUrl = article.find("div.article-content > div.article-image.article-media-image > img");
+          if (imageUrl) {
+            articleElements.push({ type: "image", src: imageUrl });
+          }
+        }
+      }
       pageData.push({
         title: articleTitle,
         url: articleUrl,
